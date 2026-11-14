@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GameHub 遊戲圖書館</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>GameHub 遊戲圖書館</h1>
+  <p class="stats" id="stats">載入中…</p>
+  <input type="search" id="search" placeholder="搜尋名稱、簡介…" aria-label="搜尋">
+  <nav id="filters" class="filters" aria-label="分類"></nav>
+</header>
+<main>
+  <section id="recentBox" class="recent" hidden>
+    <h2>最近更新</h2>
+    <ul id="recent"></ul>
+  </section>
+  <section id="grid" class="grid"></section>
+  <p id="empty" class="empty" hidden>沒有符合的產品。</p>
+</main>
+<div id="modal" class="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true">
+    <button id="close" class="close" aria-label="關閉">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+  "updated": "2026-11-14T12:00:00+08:00",
+  "categories": [
+    { "id": "boardgame", "name": "桌遊" },
+    { "id": "card", "name": "卡牌遊戲" },
+    { "id": "brawl2d", "name": "2D 大亂鬥" },
+    { "id": "sim25d", "name": "2.5D 經營" },
+    { "id": "sandbox3d", "name": "3D 創世神經營" },
+    { "id": "face3d", "name": "3D 捏臉" },
+    { "id": "brawl3d", "name": "3D 大亂鬥" },
+    { "id": "kids", "name": "2D 兒童學英文" },
+    { "id": "other", "name": "其他" }
+  ],
+  "games": [
+    {
+      "id": "lorddomain",
+      "name": "LordDomain 東漢戰區指揮",
+      "category": "card",
+      "url": "https://altcow.github.io/LordDomain/",
+      "versionUrl": "",
+      "version": "v61",
+      "status": "live",
+      "summary": "東漢戰區指揮塔防與卡牌遊戲。",
+      "cover": "",
+      "updatedAt": "2026-11-14T12:00:00+08:00",
+      "changelog": [
+        { "version": "v61", "date": "2026-11-14", "notes": ["登記於 GameHub"] }
+      ]
+    },
+    {
+      "id": "chaosbrawl",
+      "name": "ChaosBrawl 大混戰",
+      "category": "brawl2d",
+      "url": "",
+      "versionUrl": "",
+      "version": "",
+      "status": "dev",
+      "summary": "LF2 風格 8 人連線亂鬥。",
+      "cover": "",
+      "updatedAt": "2026-11-14T12:00:00+08:00",
+      "changelog": []
+    },
+    {
+      "id": "magesandbox",
+      "name": "MageSandbox 施法測試平台",
+      "category": "sandbox3d",
+      "url": "",
+      "versionUrl": "",
+      "version": "",
+      "status": "dev",
+      "summary": "施法手感測試平台,支援多人連線。",
+      "cover": "",
+      "updatedAt": "2026-11-14T12:00:00+08:00",
+      "changelog": []
+    },
+    {
+      "id": "bigwolf",
+      "name": "大野狼",
+      "category": "kids",
+      "url": "",
+      "versionUrl": "",
+      "version": "",
+      "status": "dev",
+      "summary": "給小朋友的互動 PWA。",
+      "cover": "",
+      "updatedAt": "2026-11-14T12:00:00+08:00",
+      "changelog": []
+    },
+    {
+      "id": "graywolf",
+      "name": "灰太狼躲避遊戲",
+      "category": "other",
+      "url": "",
+      "versionUrl": "",
+      "version": "",
+      "status": "dev",
+      "summary": "情境 3D 大野狼躲避遊戲。",
+      "cover": "",
+      "updatedAt": "2026-11-14T12:00:00+08:00",
+      "changelog": []
+    }
+  ]
+}
