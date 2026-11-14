@@ -1,16 +1,46 @@
 {
   "updated": "2026-11-14T13:00:00+08:00",
   "categories": [
-    { "id": "product", "name": "產品" },
-    { "id": "boardgame", "name": "桌遊" },
-    { "id": "card", "name": "卡牌遊戲" },
-    { "id": "brawl2d", "name": "2D 大亂鬥" },
-    { "id": "sim25d", "name": "2.5D 經營" },
-    { "id": "sandbox3d", "name": "3D 創世神經營" },
-    { "id": "face3d", "name": "3D 捏臉" },
-    { "id": "brawl3d", "name": "3D 大亂鬥" },
-    { "id": "kids", "name": "2D 兒童學英文" },
-    { "id": "other", "name": "其他" }
+    {
+      "id": "product",
+      "name": "產品"
+    },
+    {
+      "id": "boardgame",
+      "name": "桌遊"
+    },
+    {
+      "id": "card",
+      "name": "卡牌遊戲"
+    },
+    {
+      "id": "brawl2d",
+      "name": "2D 大亂鬥"
+    },
+    {
+      "id": "sim25d",
+      "name": "2.5D 經營"
+    },
+    {
+      "id": "sandbox3d",
+      "name": "3D 創世神經營"
+    },
+    {
+      "id": "face3d",
+      "name": "3D 捏臉"
+    },
+    {
+      "id": "brawl3d",
+      "name": "3D 大亂鬥"
+    },
+    {
+      "id": "kids",
+      "name": "2D 兒童學英文"
+    },
+    {
+      "id": "other",
+      "name": "其他"
+    }
   ],
   "games": [
     {
@@ -51,7 +81,13 @@
       "cover": "",
       "updatedAt": "2026-11-14T12:00:00+08:00",
       "changelog": [
-        { "version": "v61", "date": "2026-11-14", "notes": ["登記於 GameHub"] }
+        {
+          "version": "v61",
+          "date": "2026-11-14",
+          "notes": [
+            "登記於 GameHub"
+          ]
+        }
       ]
     },
     {
@@ -115,19 +151,6 @@
       "version": "",
       "status": "live",
       "summary": "小孩手機玩,媽媽手機另有控制頁(parent.html)。",
-      "cover": "",
-      "updatedAt": "2026-11-14T13:00:00+08:00",
-      "changelog": []
-    },
-    {
-      "id": "gamehub",
-      "name": "GameHub 管理員",
-      "category": "other",
-      "url": "https://altcow.github.io/GameHub/",
-      "versionUrl": "",
-      "version": "",
-      "status": "live",
-      "summary": "本站:所有遊戲與產品的清單。",
       "cover": "",
       "updatedAt": "2026-11-14T13:00:00+08:00",
       "changelog": []
