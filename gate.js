@@ -17,20 +17,15 @@
     $('gate').hidden = true;
     if (window.GameHubStart) window.GameHubStart();
   }
-  function remembered() {
-    try { return localStorage.getItem(KEY) === HASH; } catch (e) { return false; }
-  }
-  function remember() {
-    try { localStorage.setItem(KEY, HASH); } catch (e) { /* 無法記住則下次再輸入 */ }
-  }
+  // 每次開啟都要重新輸入密碼:不再記住,並清掉舊版留下的記錄
+  try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+
   function dots() {
     var n = $('gateInput').value.length;
     Array.prototype.forEach.call($('gateDots').children, function (d, i) {
       d.className = i < n ? 'on' : '';
     });
   }
-
-  if (remembered()) { unlock(); return; }
 
   $('gateInput').addEventListener('input', function () {
     this.value = this.value.replace(/\D/g, '');
@@ -40,7 +35,7 @@
   $('gateForm').addEventListener('submit', function (e) {
     e.preventDefault();
     sha('gamehub-v1:' + $('gateInput').value).then(function (h) {
-      if (h === HASH) { remember(); unlock(); return; }
+      if (h === HASH) { unlock(); return; }
       $('gateMsg').textContent = '密碼不對';
       $('gateInput').value = '';
       dots();
