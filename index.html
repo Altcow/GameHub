@@ -6,7 +6,18 @@
 <title>GameHub 遊戲圖書館</title>
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="locked">
+<div id="gate" class="gate">
+  <form id="gateForm" class="gate-box" autocomplete="off">
+    <div class="gate-seal">鎖</div>
+    <h1>GameHub</h1>
+    <p>請輸入通關密碼</p>
+    <div class="gate-dots" id="gateDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <input id="gateInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="密碼" autofocus>
+    <p id="gateMsg" class="gate-msg" role="alert"></p>
+    <button type="submit">進入</button>
+  </form>
+</div>
 <header class="top">
   <h1>GameHub 遊戲圖書館</h1>
   <p class="stats" id="stats">載入中…</p>
@@ -28,5 +39,6 @@
   </div>
 </div>
 <script src="app.js"></script>
+<script src="gate.js"></script>
 </body>
 </html>

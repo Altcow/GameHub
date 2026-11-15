@@ -183,5 +183,5 @@
       })
       .catch(function (e) { $('stats').textContent = '無法載入登記簿:' + e.message; });
   }
-  init();
+  window.GameHubStart = init;
 })();
