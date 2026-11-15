@@ -181,7 +181,7 @@
           (j.updated ? rel(j.updated) + '(' + fmtDate(j.updated) + ')' : '無');
         renderFilters(); renderRecent(); renderGrid(); checkOnline();
       })
-      .catch(function (e) { $('stats').textContent = '無法載入登記簿:' + e.message; });
+      .catch(function (e) { document.body.classList.add('loaderr'); $('stats').textContent = '無法載入登記簿:' + e.message; });
   }
   window.GameHubStart = init;
 })();

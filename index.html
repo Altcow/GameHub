@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GameHub 遊戲圖書館</title>
+<meta name="theme-color" content="#2B1A12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="locked">
@@ -19,10 +23,14 @@
   </form>
 </div>
 <header class="top">
-  <h1>GameHub 遊戲圖書館</h1>
+  <div class="hero"><div class="hero-in">
+    <h1><span>GameHub</span> <span>遊戲圖書館</span></h1>
+  </div></div>
   <p class="stats" id="stats">載入中…</p>
-  <input type="search" id="search" placeholder="搜尋名稱、簡介…" aria-label="搜尋">
-  <nav id="filters" class="filters" aria-label="分類"></nav>
+  <div class="tools">
+    <div class="searchwrap"><input type="search" id="search" placeholder="搜尋名稱、簡介…" aria-label="搜尋"></div>
+    <nav id="filters" class="filters" aria-label="分類"></nav>
+  </div>
 </header>
 <main>
   <section id="recentBox" class="recent" hidden>
@@ -30,7 +38,7 @@
     <ul id="recent"></ul>
   </section>
   <section id="grid" class="grid"></section>
-  <p id="empty" class="empty" hidden>沒有符合的產品。</p>
+  <p id="empty" class="empty" hidden>書閣中查無此卷</p>
 </main>
 <div id="modal" class="modal" hidden>
   <div class="sheet" role="dialog" aria-modal="true">
