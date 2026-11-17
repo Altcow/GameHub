@@ -2,7 +2,12 @@
   'use strict';
   var STATUS = { dev: '開發中', live: '已上線', paused: '暫停' };
   var data = { categories: [], games: [] };
-  var state = { cat: 'all', q: '' };
+  var state = { cat: 'all', q: '', type: 'all', view: 'card' };
+  var ICON = { product: '產', boardgame: '桌', card: '卡', brawl2d: '鬥', sim25d: '營', sandbox3d: '創', face3d: '捏', brawl3d: '鬥', kids: '學', other: '雜' };
+  var TYPES = { product: '產品', game: '遊戲' };
+  function typeOf(g) { return g.category === 'product' ? 'product' : 'game'; }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
   var online = {}; // id -> {state:'ok'|'warn'|'none', v}
 
   function $(id) { return document.getElementById(id); }
@@ -39,6 +44,7 @@
   function visible() {
     var q = state.q.trim().toLowerCase();
     return data.games.filter(function (g) {
+      if (state.type !== 'all' && typeOf(g) !== state.type) return false;
       if (state.cat !== 'all' && g.category !== state.cat) return false;
       if (!q) return true;
       return [g.name, g.summary, g.id, catName(g.category)].join(' ').toLowerCase().indexOf(q) >= 0;
@@ -58,6 +64,42 @@
       var n = data.games.filter(function (g) { return g.category === c.id; }).length;
       if (n > 0) add(c.id, c.name, n);
     });
+  }
+
+  function renderSeg(boxId, items, cur, onPick) {
+    var box = $(boxId); box.textContent = '';
+    items.forEach(function (it) {
+      var b = el('button', cur === it[0] ? 'on' : '', it[1]);
+      b.type = 'button'; b.setAttribute('aria-pressed', cur === it[0] ? 'true' : 'false');
+      b.onclick = function () { onPick(it[0]); };
+      box.appendChild(b);
+    });
+  }
+  function renderBar() {
+    renderSeg('types', [['all', '全部類型'], ['product', '產品'], ['game', '遊戲']], state.type,
+      function (v) { state.type = v; renderBar(); renderGrid(); });
+    renderSeg('views', [['card', '卡片'], ['list', '清單']], state.view,
+      function (v) { state.view = v; lsSet('gamehub.view', v); renderBar(); renderGrid(); });
+  }
+
+  function typeTag(g) {
+    var t = typeOf(g);
+    return el('span', 'type ' + t, TYPES[t]);
+  }
+  function thumb(g) {
+    var d = el('div', 'thumb'), u = g.cover || '';
+    function stamp() {
+      d.textContent = ''; d.className = 'thumb stamp';
+      d.appendChild(el('span', '', ICON[g.category] || ICON.other));
+    }
+    if (/^(https?:\/\/|[^:?#]+$)/i.test(u) && u) {
+      var im = document.createElement('img');
+      im.alt = ''; im.loading = 'lazy';
+      im.onerror = stamp;
+      im.src = u; d.appendChild(im);
+    } else stamp();
+    d.setAttribute('aria-hidden', 'true');
+    return d;
   }
 
   function syncNode(g) {
@@ -81,13 +123,34 @@
   }
 
   function renderGrid() {
-    var grid = $('grid'), list = visible();
+    var grid = $('grid'), list = visible(), lm = state.view === 'list';
     grid.textContent = '';
+    grid.className = 'grid' + (lm ? ' list' : '');
     $('empty').hidden = list.length > 0;
     list.forEach(function (g) {
-      var c = el('article', 'card');
+      var c = el('article', lm ? 'item' : 'card');
+      if (lm) {
+        c.appendChild(thumb(g));
+        var h = el('h3', '', g.name || g.id);
+        h.tabIndex = 0; h.setAttribute('role', 'button');
+        h.onclick = function () { showModal(g); };
+        h.onkeydown = function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showModal(g); } };
+        c.appendChild(h);
+        var m = el('div', 'row meta');
+        m.appendChild(typeTag(g));
+        m.appendChild(el('span', 'tag', catName(g.category)));
+        m.appendChild(el('span', 'badge ' + (STATUS[g.status] ? g.status : 'dev'), STATUS[g.status] || '開發中'));
+        if (g.version) m.appendChild(el('span', '', g.version));
+        m.appendChild(el('span', '', rel(g.updatedAt)));
+        c.appendChild(m);
+        c.appendChild(openLink(g));
+        grid.appendChild(c);
+        return;
+      }
+      c.appendChild(thumb(g));
       c.appendChild(el('h3', '', g.name || g.id));
       var r = el('div', 'row');
+      r.appendChild(typeTag(g));
       r.appendChild(el('span', 'tag', catName(g.category)));
       r.appendChild(el('span', 'badge ' + (STATUS[g.status] ? g.status : 'dev'), STATUS[g.status] || '開發中'));
       if (g.version) r.appendChild(el('span', '', g.version));
@@ -105,6 +168,7 @@
     var b = $('modalBody'); b.textContent = '';
     b.appendChild(el('h2', '', g.name || g.id));
     var r = el('div', 'row');
+    r.appendChild(typeTag(g));
     r.appendChild(el('span', 'tag', catName(g.category)));
     r.appendChild(el('span', 'badge ' + (STATUS[g.status] ? g.status : 'dev'), STATUS[g.status] || '開發中'));
     if (g.version) r.appendChild(el('span', '', g.version));
@@ -168,6 +232,8 @@
   }
 
   function init() {
+    state.view = lsGet('gamehub.view') === 'list' ? 'list' : 'card';
+    renderBar();
     $('search').addEventListener('input', function (e) { state.q = e.target.value; renderGrid(); });
     $('close').onclick = function () { $('modal').hidden = true; };
     $('modal').onclick = function (e) { if (e.target === $('modal')) $('modal').hidden = true; };

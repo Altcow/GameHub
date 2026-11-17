@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14T13:00:00+08:00",
+  "updated": "2026-11-17T12:00:00+08:00",
   "categories": [
     {
       "id": "product",
@@ -92,7 +92,7 @@
     },
     {
       "id": "lorddomain-city",
-      "name": "LordDomain 城市經營",
+      "name": "模擬縣市",
       "category": "sim25d",
       "url": "https://altcow.github.io/LordDomain_city/",
       "versionUrl": "",
@@ -105,7 +105,7 @@
     },
     {
       "id": "chaosbrawl",
-      "name": "ChaosBrawl 小朋友齊打交",
+      "name": "小朋友齊打交",
       "category": "brawl2d",
       "url": "https://altcow.github.io/ChaosBrawl/",
       "versionUrl": "",
