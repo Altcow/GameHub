@@ -8,6 +8,7 @@
   --serif:"Noto Serif TC","DFKai-SB","BiauKai","標楷體","Songti TC","PMingLiU",serif;
 }
 *{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
 body{margin:0;color:var(--ink);font:15px/1.5 -apple-system,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;
   background-color:var(--wood-d);
   background-image:radial-gradient(ellipse at 50% 20%,rgba(0,0,0,0) 30%,rgba(0,0,0,.55) 100%),linear-gradient(rgba(43,26,18,.35),rgba(43,26,18,.35)),url(img/bg_wood.webp);
@@ -23,13 +24,13 @@ h2{font-size:17px;margin:0 0 8px}
   -webkit-mask-composite:source-in;
   mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent),linear-gradient(to bottom,#000 80%,transparent);
   mask-composite:intersect}
-.hero-in{position:relative;width:115vw;left:50%;transform:translateX(-50%);aspect-ratio:1536/780;container-type:inline-size;
+.hero-in{position:relative;width:115%;margin-left:-7.5%;aspect-ratio:1536/780;container-type:inline-size;
   background:var(--wood-d) url(img/header_eaves.webp) center/100% 100% no-repeat}
 .hero h1{position:absolute;left:17.25%;width:65.6%;top:42.9%;height:38.1%;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;color:var(--gold-l);font-weight:900;font-size:7.4cqw;line-height:1.15;letter-spacing:.06em;text-shadow:0 2px 3px #000a,0 0 12px #0008}
 .hero h1 span{display:block}
 @media (min-width:700px){
-  .hero-in{width:100%;left:0;transform:none}
+  .hero-in{width:100%;margin-left:0}
   .hero h1{flex-direction:row;gap:.4em;font-size:5.2cqw}
   .hero h1 span{display:inline}
 }
