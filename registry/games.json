@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-17T12:00:00+08:00",
+  "updated": "2026-11-19T12:00:00+08:00",
   "categories": [
     {
       "id": "product",
@@ -54,6 +54,19 @@
       "summary": "腳踏車 ERP 系統。",
       "cover": "",
       "updatedAt": "2026-11-14T13:00:00+08:00",
+      "changelog": []
+    },
+    {
+      "id": "shochu",
+      "name": "燒酒會",
+      "category": "product",
+      "url": "https://altcow.github.io/Shochu/",
+      "versionUrl": "",
+      "version": "",
+      "status": "live",
+      "summary": "居酒屋店面介紹。",
+      "cover": "",
+      "updatedAt": "2026-11-19T12:00:00+08:00",
       "changelog": []
     },
     {
