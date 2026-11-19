@@ -2,7 +2,7 @@
   'use strict';
   var STATUS = { dev: '開發中', live: '已上線', paused: '暫停' };
   var data = { categories: [], games: [] };
-  var state = { cat: 'all', q: '', type: 'all', view: 'card' };
+  var state = { cat: 'all', q: '', type: 'all', view: 'simple' };
   var ICON = { product: '產', boardgame: '桌', card: '卡', brawl2d: '鬥', sim25d: '營', sandbox3d: '創', face3d: '捏', brawl3d: '鬥', kids: '學', other: '雜' };
   var TYPES = { product: '產品', game: '遊戲' };
   function typeOf(g) { return g.category === 'product' ? 'product' : 'game'; }
@@ -78,8 +78,8 @@
   function renderBar() {
     renderSeg('types', [['all', '全部類型'], ['product', '產品'], ['game', '遊戲']], state.type,
       function (v) { state.type = v; renderBar(); renderGrid(); });
-    renderSeg('views', [['card', '卡片'], ['list', '清單']], state.view,
-      function (v) { state.view = v; lsSet('gamehub.view', v); renderBar(); renderGrid(); });
+    renderSeg('views', [['simple', '簡化'], ['detail', '詳細']], state.view,
+      function (v) { state.view = v; lsSet('gamehub.view2', v); renderBar(); renderGrid(); });
   }
 
   function typeTag(g) {
@@ -113,17 +113,55 @@
     return s;
   }
 
-  function openLink(g) {
-    var u = safeUrl(g.url), a;
-    if (u) {
-      a = el('a', 'open', '開啟'); a.href = u; a.target = '_blank'; a.rel = 'noopener';
-      a.onclick = function (e) { e.stopPropagation(); };
-    } else a = el('span', 'open off', '尚無網址');
+  function linksOf(g) {
+    var out = [];
+    (Array.isArray(g.links) ? g.links : []).forEach(function (l) {
+      var u = l && safeUrl(l.url);
+      if (u) out.push({ label: l.label || '開啟', url: u, kind: l.kind === 'admin' || l.kind === 'other' ? l.kind : 'public' });
+    });
+    if (!out.length && safeUrl(g.url)) out.push({ label: '開啟', url: safeUrl(g.url), kind: 'public' });
+    return out;
+  }
+  function mkA(cls, text, u) {
+    var a = el('a', cls, text); a.href = u; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    a.onclick = function (e) { e.stopPropagation(); };
     return a;
+  }
+  function openLink(g) {
+    var ls = linksOf(g), u = safeUrl(g.url), p = null, i;
+    for (i = 0; i < ls.length; i++) if (ls[i].url === u) p = ls[i];
+    for (i = 0; i < ls.length && !p; i++) if (ls[i].kind !== 'admin') p = ls[i];
+    if (!p) p = ls[0];
+    return p ? mkA('open', '開啟', p.url) : el('span', 'open off', '尚無網址');
+  }
+  function adminLink(g, except) {
+    var ls = linksOf(g);
+    for (var i = 0; i < ls.length; i++) if (ls[i].kind === 'admin' && ls[i].url !== except) return mkA('open admin', '後台', ls[i].url);
+    return null;
+  }
+  function linkBtns(g) {
+    var ls = linksOf(g);
+    if (!ls.length) return el('span', 'open off', '尚無網址');
+    var box = el('div', 'links');
+    ls.forEach(function (l) {
+      var a = mkA('lk ' + l.kind, l.label, l.url);
+      if (l.kind === 'admin') a.appendChild(el('small', 'lock', '需密碼'));
+      box.appendChild(a);
+    });
+    return box;
+  }
+  function recentLog(g, n) {
+    var cl = (g.changelog || []).slice().sort(function (a, c) { return (ts(c.date) - ts(a.date)) || 0; }).slice(0, n);
+    if (!cl.length) return null;
+    var ul = el('ul', 'mini');
+    cl.forEach(function (e) {
+      ul.appendChild(el('li', '', (e.version || '') + (e.date ? ' ' + e.date : '') + ((e.notes || [])[0] ? ' — ' + e.notes[0] : '')));
+    });
+    return ul;
   }
 
   function renderGrid() {
-    var grid = $('grid'), list = visible(), lm = state.view === 'list';
+    var grid = $('grid'), list = visible(), lm = state.view === 'simple';
     grid.textContent = '';
     grid.className = 'grid' + (lm ? ' list' : '');
     $('empty').hidden = list.length > 0;
@@ -143,7 +181,8 @@
         if (g.version) m.appendChild(el('span', '', g.version));
         m.appendChild(el('span', '', rel(g.updatedAt)));
         c.appendChild(m);
-        c.appendChild(openLink(g));
+        var ob = openLink(g), ad = adminLink(g, ob.href);
+        if (ad) { var w = el('div', 'acts'); w.appendChild(ob); w.appendChild(ad); c.appendChild(w); } else c.appendChild(ob);
         grid.appendChild(c);
         return;
       }
@@ -158,7 +197,8 @@
       c.appendChild(r);
       if (g.summary) c.appendChild(el('p', 'sum', g.summary));
       c.appendChild(el('div', 'row', '更新:' + rel(g.updatedAt) + (fmtDate(g.updatedAt) ? '(' + fmtDate(g.updatedAt) + ')' : '')));
-      c.appendChild(openLink(g));
+      c.appendChild(linkBtns(g));
+      var rl = recentLog(g, 3); if (rl) c.appendChild(rl);
       c.onclick = function () { showModal(g); };
       grid.appendChild(c);
     });
@@ -175,7 +215,7 @@
     var sn = syncNode(g); if (sn) r.appendChild(sn);
     b.appendChild(r);
     if (g.summary) b.appendChild(el('p', '', g.summary));
-    b.appendChild(openLink(g));
+    b.appendChild(linkBtns(g));
     var log = el('div', 'log');
     log.appendChild(el('h3', '', '更新紀錄'));
     var cl = (g.changelog || []).slice().sort(function (a, c) {
@@ -232,7 +272,7 @@
   }
 
   function init() {
-    state.view = lsGet('gamehub.view') === 'list' ? 'list' : 'card';
+    state.view = lsGet('gamehub.view2') === 'detail' ? 'detail' : 'simple';
     renderBar();
     $('search').addEventListener('input', function (e) { state.q = e.target.value; renderGrid(); });
     $('close').onclick = function () { $('modal').hidden = true; };

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19T12:00:00+08:00",
+  "updated": "2026-11-19T15:00:00+08:00",
   "categories": [
     {
       "id": "product",
@@ -64,9 +64,11 @@
       "versionUrl": "",
       "version": "",
       "status": "live",
-      "summary": "居酒屋店面介紹。",
+      "links": [{ "label": "訪客版", "url": "https://altcow.github.io/Shochu/", "kind": "public" },
+        { "label": "後台版", "url": "https://altcow.github.io/Shochu/admin/", "kind": "admin" }],
+      "summary": "居酒屋店面介紹;訪客版給客人看,後台版給老闆用(需密碼)。",
       "cover": "",
-      "updatedAt": "2026-11-19T12:00:00+08:00",
+      "updatedAt": "2026-11-19T15:00:00+08:00",
       "changelog": []
     },
     {

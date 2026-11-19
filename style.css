@@ -116,9 +116,19 @@ hr.meander,.recent h2::after{content:"";display:block;height:12px;background:url
 .item h3{grid-area:n;margin:0;font-size:16px;cursor:pointer;min-width:0;overflow-wrap:anywhere}
 .item h3:hover{text-decoration:underline}
 .item .meta{grid-area:m;min-width:0}
-.item .open{grid-area:o;margin:0;align-self:center;padding:2px 12px}
+.item .open{margin:0;align-self:center;padding:2px 12px}
+.item>.open,.item>.acts{grid-area:o}
+.acts{display:flex;gap:6px;align-items:center}
+.open.admin{border-width:2px;border-image:none;border-color:var(--gold);background:var(--wood-m);color:var(--gold-l);padding:2px 8px;font-size:13px;letter-spacing:.1em}
 .item .open.off{padding:4px 10px}
 @media (min-width:700px){.item{grid-template-columns:48px minmax(0,1fr) auto}}
+
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.lk{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;font:700 15px/1.5 var(--serif);letter-spacing:.15em;text-decoration:none;color:#FFF6E4;border-radius:4px;border:2px solid var(--red-d);background:linear-gradient(var(--red-l),var(--red));text-shadow:0 1px 1px var(--red-d)}
+.lk.admin,.lk.other{background:var(--wood-m);border-color:var(--gold);color:var(--gold-l);text-shadow:none}
+.lk:hover{filter:brightness(1.15)}
+.lock{font:700 11px/1.4 var(--serif);letter-spacing:.05em;padding:0 5px;border:1px solid var(--gold);border-radius:3px;color:var(--wood-d);background:var(--gold-l)}
+.mini{margin:2px 0 0;padding-left:18px;font-size:13px;color:var(--ink2)}
 
 /* 載入中 / 空狀態 */
 #grid:empty:has(+ #empty[hidden])::before{grid-column:1/-1;content:"";display:block;width:52px;height:52px;margin:24px auto 8px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Ccircle cx='24' cy='24' r='20' fill='%23C9A14A' stroke='%238C6A2A' stroke-width='2'/%3E%3Ccircle cx='24' cy='24' r='15' fill='none' stroke='%238C6A2A' stroke-width='1'/%3E%3Crect x='17' y='17' width='14' height='14' fill='%232B1A12' stroke='%238C6A2A' stroke-width='2'/%3E%3C/svg%3E") center/contain no-repeat;animation:coin 2.4s linear infinite}
